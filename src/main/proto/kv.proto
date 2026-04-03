@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package vk.grpc;
+
+option java_multiple_files = true;
+
+service KeyValueService {
+  rpc put (PutRequest) returns (PutReply);
+  rpc get (GetRequest) returns (GetReply);
+  rpc delete (DeleteRequest) returns (DeleteReply);
+  rpc range(RangeRequest) returns (stream KeyValuePair);
+  rpc count (CountRequest) returns (CountReply);
+}
+
+message PutRequest {
+  string key = 1;
+  bytes value = 2;
+}
+message PutReply {
+  bool success = 1;
+}
+
+message GetRequest {
+  string key = 1;
+}
+message GetReply {
+  bool success = 1;
+  bytes value = 2;
+}
+
+message DeleteRequest {
+  string key = 1;
+}
+message DeleteReply {
+  bool success = 1;
+}
+
+message RangeRequest {
+  string key_since = 1;
+  string key_to = 2;
+}
+
+message KeyValuePair {
+  string key = 1;
+  bytes value = 2;
+}
+
+message CountRequest {}
+message CountReply {
+  int32 count = 1;
+}

@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  tarantool:
+    image: tarantool/tarantool:3.2
+    container_name: vk-tarantool-32
+    ports:
+      - "3301:3301"
+    volumes:
+      - ./init.lua:/init.lua:ro
+      - tarantool_data:/var/lib/tarantool
+    command: tarantool /init.lua
+    restart: unless-stopped
+
+volumes:
+  tarantool_data:
